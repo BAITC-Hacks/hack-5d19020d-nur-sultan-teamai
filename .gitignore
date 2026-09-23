@@ -1,0 +1,22 @@
+# Local agent / graph
+.code-review-graph/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies / builds
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
