@@ -1,0 +1,19 @@
+target: power_normalized
+features:
+  - wind_ms
+  - temperature_c
+  - lead_hours
+  - hour_sin
+  - hour_cos
+  - doy_sin
+  - doy_cos
+catboost:
+  iterations: 200
+  depth: 6
+  learning_rate: 0.08
+  loss_function: RMSE
+  random_seed: 42
+  verbose: false
+train:
+  min_train_rows: 200
+  valid_days: 14

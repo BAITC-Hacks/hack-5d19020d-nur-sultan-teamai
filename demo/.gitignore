@@ -1,0 +1,15 @@
+data/processed/
+data/models/
+data/traces/
+data/exports/
+data/raw/*.xlsx
+data/raw/*.xls
+data/raw/*.csv
+!.gitkeep
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+catboost_info/

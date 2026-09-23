@@ -14,9 +14,29 @@ build/
 .turbo/
 coverage/
 *.log
+demo/.venv/
+demo/data/processed/
+demo/data/models/
+demo/data/traces/
+demo/data/exports/
+__pycache__/
+*.pyc
+.pytest_cache/
 
 # OS / editor
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+# WIND AGENT runtime and generated evidence
+.venv/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.egg-info/
+data/
+.runtime.json
+.impeccable/
+!docs/release/

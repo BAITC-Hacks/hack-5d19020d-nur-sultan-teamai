@@ -1,0 +1,10 @@
+llm_mode: openai  # auto | openai | nvidia | mock (overridden by WIND_DEMO_LLM_MODE)
+openai_model: gpt-4o-mini
+nvidia_model: meta/llama-3.1-8b-instruct
+max_tool_steps: 6
+budget_usd_soft_limit: 5.0
+tools:
+  - audit_data
+  - run_forecast
+  - explain_metrics
+  - export_submission

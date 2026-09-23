@@ -1,0 +1,17 @@
+sites:
+  - turbine_id: T1
+    name: Turbine 1 (fixture / provisional)
+    # Fill when known from PDF / organizers:
+    lat: null
+    lon: null
+    filename_contains: "turbine 1"
+  - turbine_id: T2
+    name: Turbine 2 (fixture / provisional)
+    lat: null
+    lon: null
+    filename_contains: "turbine 2"
+
+# Used only by OpenMeteoProvider when both lat/lon are set for a site.
+# Example (NOT claimed real site):
+# lat: 45.0
+# lon: 80.0

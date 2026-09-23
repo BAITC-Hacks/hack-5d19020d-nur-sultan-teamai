@@ -1,0 +1,18 @@
+{
+  "schema_version": "wind-v1",
+  "timezone": "Asia/Almaty",
+  "interval_label": "start",
+  "time_metadata_confirmed": false,
+  "telemetry_delay_minutes": 10,
+  "gfs_grid": "1p00",
+  "weather_release_lag_hours": 8,
+  "weather_release_lag_confirmed": false,
+  "forecast_hours": 48,
+  "training_cutoff": "2026-01-31T00:00:00Z",
+  "sites": [
+    {"site_id": "turbine_1", "label": "Турбина 1", "latitude": 43.645150, "longitude": 78.535604,
+     "coordinates_source": "https://maps.app.goo.gl/iN6svMt69D5qRpFU9", "filename_contains": "turbine 1"},
+    {"site_id": "turbine_2", "label": "Турбина 2", "latitude": 43.643198, "longitude": 78.538828,
+     "coordinates_source": "https://maps.app.goo.gl/8UQMwsYavY6nLvFY8", "filename_contains": "turbine 2"}
+  ]
+}

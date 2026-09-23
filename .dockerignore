@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+.venv
+.agents
+.cursor
+.code-review-graph
+.impeccable
+docs
+tests
+__pycache__

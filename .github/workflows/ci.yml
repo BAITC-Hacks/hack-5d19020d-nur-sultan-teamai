@@ -1,0 +1,15 @@
+name: Offline checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.18"
+      - run: uv sync --python 3.11 --frozen --extra dev --no-editable
+      - run: uv run --no-sync ruff check wind_agent ui tests
+      - run: uv run --no-sync pytest
+        env:
+          WIND_DATA_DIR: ${{ runner.temp }}/wind-test

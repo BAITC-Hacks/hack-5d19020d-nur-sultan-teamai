@@ -1,0 +1,7 @@
+timezone_assumption: UTC
+interval_label: start
+sample_minutes: 10
+horizon_hours: 48
+schedule: rolling_next_48
+default_origin_hour_utc: 0
+telemetry_available_lag_hours: 1
