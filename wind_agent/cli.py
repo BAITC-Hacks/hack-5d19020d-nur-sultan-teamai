@@ -95,13 +95,15 @@ def run_all(profile: str = "mvp"):
     from .evaluation import validate as validate_action
     from .forecast import replay as replay_action
     from .ingest import ingest as ingest_action
-    from .storage import read_json
+    from .storage import read_json, sha256
+    from .config import raw_root
     from .weather import fetch_many
     cfg = project()
+    inputs = {p.name: sha256(p) for p in sorted(raw_root().glob("*.xlsx")) if not p.name.startswith("~$")}
     status_path = data_root() / "pipeline.json"
     status = read_json(status_path) if status_path.exists() else {}
-    if status.get("config_hash") != cfg.fingerprint or status.get("profile") != profile:
-        status = {"config_hash": cfg.fingerprint, "profile": profile, "completed": []}
+    if status.get("config_hash") != cfg.fingerprint or status.get("profile") != profile or status.get("inputs") != inputs:
+        status = {"config_hash": cfg.fingerprint, "profile": profile, "inputs": inputs, "completed": []}
     def step(name, action):
         if name in status["completed"]:
             typer.echo(f"Resume: {name} already complete")

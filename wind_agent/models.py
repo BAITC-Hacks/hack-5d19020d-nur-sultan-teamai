@@ -1,4 +1,5 @@
 """CPU models trained only on archived NWP inputs; no measured wind at forecast time."""
+import hashlib
 import uuid
 
 import numpy as np
@@ -57,6 +58,7 @@ class PowerModel:
                     qm.fit(x, group.power, sample_weight=group.sample_weight, cat_features=categorical)
                     self.quantiles[key] = qm
         self.card = {"kind": self.kind, "created_at": iso(now()), "fit_cutoff": iso(cutoff),
+                     "training_rows_sha256": hashlib.sha256(pd.util.hash_pandas_object(frame, index=False).values.tobytes()).hexdigest(),
                      "max_observation_available_at": iso(frame.obs_available_at.max()),
                      "train_rows": len(frame), "unique_target_hours": int(frame.groupby(["site_id", "target_time"]).ngroups),
                      "first_target": iso(frame.target_time.min()), "last_target": iso(frame.target_time.max()),

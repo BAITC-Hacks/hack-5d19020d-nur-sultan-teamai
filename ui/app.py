@@ -79,14 +79,14 @@ with st.sidebar:
     selected_day = st.date_input("Дата выпуска, UTC", date(2026, 2, 1), min_value=date(2026, 1, 31), max_value=date.today())
     provider_label = st.selectbox("Диспетчер", ["Локальный · без API", "NVIDIA", "OpenAI"])
     provider = {"Локальный · без API": "offline", "NVIDIA": "nvidia", "OpenAI": "openai"}[provider_label]
-    if st.button("Рассчитать 48 часов", type="primary", use_container_width=True, disabled=not readiness.get("ready", False)):
+    if st.button("Рассчитать 48 часов", type="primary", width="stretch", disabled=not readiness.get("ready", False)):
         submit("/forecast-jobs", {"origin": selected_day.isoformat()+"T00:00:00Z", "provider": provider})
     if not readiness.get("ready"):
         missing = [k for k, v in readiness.get("checks", {}).items() if not v]
         st.warning("Ожидается: " + ", ".join(missing))
     st.divider()
     st.caption("Источник: NOAA GFS\n\nЧисленный прогноз: обученная модель CPU\n\nОблачный агент: только выбор разрешённых действий")
-    if st.button("Обновить экран", use_container_width=True):
+    if st.button("Обновить экран", width="stretch"):
         st.rerun()
     st.caption("Все часы на экране — UTC. Мощность в долях от нормировки исходных данных.")
 
@@ -132,7 +132,7 @@ with forecast_tab:
                               hovermode="x unified", legend={"orientation":"h", "y":1.12},
                               xaxis={"title":"Начало прогнозируемого часа · UTC", "gridcolor":"#dce6ed"},
                               yaxis={"title":"Нормализованная мощность", "range":[0,1], "dtick":.2, "gridcolor":"#cadbe5"})
-            st.plotly_chart(fig, use_container_width=True, config={"displaylogo":False})
+            st.plotly_chart(fig, width="stretch", config={"displaylogo":False})
             st.caption(f"Выпуск погоды: {release['weather_run']} · GFS {release['grid']} · обучение до {release['fit_cutoff']}")
             if subset.p10.notna().all():
                 st.caption("Затенение — предсказанные квантили, не гарантия 80% покрытия. Измеренное покрытие — во вкладке точности.")
@@ -141,7 +141,7 @@ with forecast_tab:
             csv_path = data_root()/"forecasts"/release["forecast_id"]/"forecast.csv"
             st.download_button("Скачать выпуск CSV · обе турбины", csv_path.read_bytes(), file_name=release["forecast_id"]+".csv", mime="text/csv")
             with st.expander("Почасовые значения и источник"):
-                st.dataframe(subset[["target_time", "prediction", "p10", "p50", "p90", "wind100", "temperature_2m"]], hide_index=True, use_container_width=True)
+                st.dataframe(subset[["target_time", "prediction", "p10", "p50", "p90", "wind100", "temperature_2m"]], hide_index=True, width="stretch")
                 st.json(content["manifest"])
     replay_path = data_root()/"replays"/"latest.json"
     if replay_path.exists():
@@ -161,21 +161,21 @@ with validation_tab:
         st.subheader("Модель выбирается на 2025 году")
         st.write("Каждый месяц начинается с новой границы обучения. Внутри месяца фактическая мощность не обновляет модель.")
         st.caption("Меньше RMSE и MAE — лучше. Все модели сравниваются на одинаковых доступных часах; турбины и месяцы имеют равный вес.")
-        st.dataframe(pd.DataFrame(report["summaries"]).sort_values("macro_rmse"), hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(report["summaries"]).sort_values("macro_rmse"), hide_index=True, width="stretch")
         st.write("Выбрана модель: **"+report["selected_model"]+"**")
         if scores.get("holdout"):
             st.subheader("Независимая проверка · январь 2026")
             hold = scores["holdout"]
             st.caption(f"{hold['origins']} выпусков. Этот месяц не использовался для выбора модели.")
-            st.dataframe(pd.DataFrame(hold["sites"]).T, use_container_width=True)
+            st.dataframe(pd.DataFrame(hold["sites"]).T, width="stretch")
         with st.expander("Покрытие и метрики по месяцам"):
-            st.dataframe(pd.DataFrame(report["folds"]), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(report["folds"]), hide_index=True, width="stretch")
 
 with quality_tab:
     st.subheader("Что известно о данных")
     audit = get("/audit", {})
     if audit:
-        st.dataframe(pd.DataFrame(audit["sites"])[["site_id", "input_rows", "full_hours", "partial_hours", "empty_hours", "invalid_or_ambiguous_time_rows"]], hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(audit["sites"])[["site_id", "input_rows", "full_hours", "partial_hours", "empty_hours", "invalid_or_ambiguous_time_rows"]], hide_index=True, width="stretch")
     st.write("В обучение входят только часы с шестью корректными 10-минутными измерениями. Пропуски не заменяются нулями.")
     st.write("Координаты взяты из ссылок официального задания. Ветер GFS на 100 м — погодный признак; высота ступицы турбин неизвестна.")
     st.write("Публикация погоды: проверяются метки S3 Last-Modified, дополнительно принят запас 8 часов после старта модели. Эта политика ещё не подтверждена организаторами.")
@@ -188,7 +188,7 @@ with agent_tab:
     st.subheader("Очередь и решения")
     jobs = get("/jobs", [])
     if jobs:
-        st.dataframe(pd.DataFrame(jobs)[["id", "kind", "state", "created_at", "attempts", "error"]], hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(jobs)[["id", "kind", "state", "created_at", "attempts", "error"]], hide_index=True, width="stretch")
         job_id = st.selectbox("Журнал задачи", [j["id"] for j in jobs])
         chosen_job = next(j for j in jobs if j["id"] == job_id)
         if chosen_job["state"] == "failed" and st.button("Повторить неудачную задачу"):
