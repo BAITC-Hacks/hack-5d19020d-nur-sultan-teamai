@@ -46,6 +46,9 @@ Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
 - The human handles `git push`. Do **not** commit or push unless explicitly asked.
 - Prefer small, shippable increments over large refactors.
 - Keep secrets out of the repo: use `.env` / GitHub Actions secrets, never commit API keys.
+- Local hackathon runs: put keys in repo-root `.env` (and/or `demo/.env`). Both are gitignored.
+  Packages auto-load them on import (`wind_demo.config` / `wind_agent.config`). Copy
+  `.env.example` → `.env` once; do not paste real keys into README or commits.
 
 ## Working agreements
 

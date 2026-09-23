@@ -104,10 +104,12 @@ def _decode_points(payload, sites, run, lead, field):
                                     format="%Y%m%d%H%M", utc=True)
         if actual_run != run or int(codes_get(handle, "endStep")) != lead:
             raise WeatherUnavailable("GRIB run/forecast step does not match its URL")
-        expected_parameter = {"TMP": "t", "UGRD": "u", "VGRD": "v"}[field[0]]
+        expected_parameter = {"TMP": {"2t", "t2m", "t"}, "UGRD": {"100u", "u100", "u"}, "VGRD": {"100v", "v100", "v"}}[field[0]]
         short = codes_get(handle, "shortName")
-        if expected_parameter not in short:
+        if short not in expected_parameter:
             raise WeatherUnavailable(f"Unexpected GRIB parameter {short}")
+        if codes_get(handle, "typeOfLevel") != "heightAboveGround" or int(codes_get(handle, "level")) != (2 if field[0] == "TMP" else 100):
+            raise WeatherUnavailable("Unexpected GRIB field height")
         unit = codes_get(handle, "units")
         if unit not in ({"K"} if field[0] == "TMP" else {"m s**-1", "m s-1"}):
             raise WeatherUnavailable(f"Unexpected units {unit}")
@@ -248,6 +250,9 @@ def cached_weather(before=None):
     for path in paths:
         if before and utc(path.stem.replace("T", " ").replace("Z", "+00:00")) >= utc(before):
             continue
+        manifest = read_json(path.with_suffix(".json"))
+        if manifest["config_hash"] != project().fingerprint or sha256(path) != manifest["sha256"]:
+            raise WeatherUnavailable("Cached weather contract/checksum mismatch")
         frames.append(pd.read_parquet(path))
     if not frames:
         raise WeatherUnavailable("No cached forecast weather. Run wind-agent weather first")

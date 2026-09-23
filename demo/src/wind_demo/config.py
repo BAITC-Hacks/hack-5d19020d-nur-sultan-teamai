@@ -15,10 +15,32 @@ def demo_root() -> Path:
 
 
 def load_env() -> None:
+    """Load secrets from local .env files (never committed).
+
+    Search order (first wins for each key; later files only fill gaps):
+    1) demo/.env
+    2) repo-root .env
+    3) cwd/.env and parents up to filesystem root (agent-friendly)
+    """
     root = demo_root()
-    # Prefer demo/.env, then repo-root .env
-    load_dotenv(root / ".env")
-    load_dotenv(root.parent / ".env", override=False)
+    repo = root.parent
+    candidates: list[Path] = [root / ".env", repo / ".env"]
+    cwd = Path.cwd().resolve()
+    for folder in [cwd, *cwd.parents]:
+        candidates.append(folder / ".env")
+        if folder == repo or folder == folder.parent:
+            break
+    seen: set[Path] = set()
+    for path in candidates:
+        path = path.resolve()
+        if path in seen or not path.is_file():
+            continue
+        seen.add(path)
+        load_dotenv(path, override=False)
+
+
+# Eager load so `import wind_demo` / CLI / API see keys even if callers forget load_env().
+load_env()
 
 
 class Site(BaseModel):

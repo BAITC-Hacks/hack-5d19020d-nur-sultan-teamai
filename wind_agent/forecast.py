@@ -58,6 +58,9 @@ def predict_origin(origin, model=None, strict=False):
     frame["computed_at"] = now()
     frame["mode"] = "weather_only_frozen"
     frame["provisional"] = not (cfg.time_metadata_confirmed and cfg.weather_release_lag_confirmed)
+    for column in frame.columns:
+        if isinstance(frame[column].dtype, pd.DatetimeTZDtype):
+            frame[column] = frame[column].astype("datetime64[ns, UTC]")
     assert_forecast(frame, origin, cfg)
     forecast_id = f"{origin:%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:10]}"
     directory = data_root() / "forecasts" / forecast_id

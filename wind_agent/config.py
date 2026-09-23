@@ -9,7 +9,26 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parents[1]
-load_dotenv(ROOT / ".env", override=False)
+
+
+def load_env() -> None:
+    """Load local .env from repo root, then cwd/parents (agent-friendly). Never commit secrets."""
+    candidates: list[Path] = [ROOT / ".env"]
+    cwd = Path.cwd().resolve()
+    for folder in [cwd, *cwd.parents]:
+        candidates.append(folder / ".env")
+        if folder == ROOT or folder == folder.parent:
+            break
+    seen: set[Path] = set()
+    for path in candidates:
+        path = path.resolve()
+        if path in seen or not path.is_file():
+            continue
+        seen.add(path)
+        load_dotenv(path, override=False)
+
+
+load_env()
 
 
 class Site(BaseModel):

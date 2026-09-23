@@ -35,7 +35,7 @@ def monthly_origins(profile="mvp"):
     if profile not in ("mvp", "full"):
         raise ValueError("Profile must be mvp or full")
     if profile == "full":
-        return list(pd.date_range("2024-01-01", "2026-02-28", freq="D", tz="UTC"))
+        return list(pd.date_range("2023-03-11", "2026-02-28", freq="D", tz="UTC"))
     # 2024 history spans all seasons; validation includes all 12 months of 2025.
     history = list(pd.date_range("2024-01-01", "2024-12-31", freq="14D", tz="UTC"))
     development = [pd.Timestamp(year=2025, month=m, day=d, tz="UTC") for m in range(1, 13) for d in (1, 8, 15, 22)]
