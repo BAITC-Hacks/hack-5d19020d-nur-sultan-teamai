@@ -1,0 +1,13 @@
+{
+  "schema_version": "1",
+  "generated_at_utc": "2026-09-23T00:00:00Z",
+  "input_root": "inputs/raw",
+  "files": [],
+  "expected_but_missing": [
+    "turbine_1_xlsx",
+    "turbine_2_xlsx",
+    "challenge_pdf"
+  ],
+  "audit_status": "blocked_missing_inputs",
+  "notes": "No source data was copied, synthesized, or promoted to a real-data claim."
+}

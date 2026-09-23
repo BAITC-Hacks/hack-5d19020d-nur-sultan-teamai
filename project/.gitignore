@@ -1,0 +1,16 @@
+.venv/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.py[cod]
+.env
+data/raw/*
+data/processed/*
+data/weather_cache/*
+data/predictions/*
+artifacts/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/weather_cache/.gitkeep
+!data/predictions/.gitkeep
+!artifacts/.gitkeep

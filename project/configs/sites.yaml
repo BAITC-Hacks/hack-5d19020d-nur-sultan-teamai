@@ -1,0 +1,18 @@
+version: '2.0'
+sites:
+  - turbine_id: turbine_1
+    coordinate_source: https://maps.app.goo.gl/iN6svMt69D5qRpFU9
+    latitude: null
+    longitude: null
+    coordinate_status: unknown
+    scada_timezone: null
+    timestamp_semantics: null
+    availability_delay_minutes: null
+  - turbine_id: turbine_2
+    coordinate_source: https://maps.app.goo.gl/8UQMwsYavY6nLvFY8
+    latitude: null
+    longitude: null
+    coordinate_status: unknown
+    scada_timezone: null
+    timestamp_semantics: null
+    availability_delay_minutes: null
