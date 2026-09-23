@@ -36,7 +36,11 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.egg-info/
-data/
+/data/
+# Keep committed demo fixtures; ignore only generated demo artifacts (rules above).
+!demo/data/
+!demo/data/fixtures/
+!demo/data/fixtures/**
 .runtime.json
 .impeccable/
 !docs/release/
