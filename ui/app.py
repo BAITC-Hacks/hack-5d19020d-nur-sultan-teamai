@@ -32,6 +32,7 @@ div[data-testid="stDataFrame"] {font-variant-numeric:tabular-nums;}
 button:focus-visible, input:focus-visible {outline:3px solid #176083; outline-offset:3px;}
 ::selection {background:#a9d8e9; color:#16344b;}
 a {text-underline-offset:.2em;}
+div[data-testid="stCaptionContainer"], div[data-testid="stCaptionContainer"] p {color:#476377 !important;}
 @media(max-width:700px){.block-container{padding:1rem;} h1{font-size:1.8rem !important;}}
 </style>
 """, unsafe_allow_html=True)

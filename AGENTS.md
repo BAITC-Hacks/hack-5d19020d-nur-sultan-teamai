@@ -62,19 +62,19 @@ Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
 
 ```bash
 # install
-# <TBD>
+.\scripts\setup.ps1
 
 # dev
-# <TBD>
+.\scripts\start.ps1 -OpenBrowser
 
 # lint / typecheck
-# <TBD>
+.\scripts\run.ps1 release-check
 
 # test
-# <TBD>
+.\scripts\run.ps1 release-check
 
 # build
-# <TBD>
+.\scripts\run.ps1 run-all --profile mvp
 ```
 
 ## Directory map (update as the project grows)

@@ -91,12 +91,12 @@ def provider_probe(provider: str = "openai"):
 
 @app.command("run-all")
 def run_all(profile: str = "mvp"):
+    from .config import raw_root
     from .evaluation import monthly_origins, train_final
     from .evaluation import validate as validate_action
     from .forecast import replay as replay_action
     from .ingest import ingest as ingest_action
     from .storage import read_json, sha256
-    from .config import raw_root
     from .weather import fetch_many
     cfg = project()
     inputs = {p.name: sha256(p) for p in sorted(raw_root().glob("*.xlsx")) if not p.name.startswith("~$")}
