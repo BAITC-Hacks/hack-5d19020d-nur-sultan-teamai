@@ -59,19 +59,19 @@ Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
 
 ```bash
 # install
-# <TBD>
+cd project && uv sync --dev
 
 # dev
-# <TBD>
+cd project && uv run wind-agent --help
 
 # lint / typecheck
-# <TBD>
+cd project && uv run ruff check .
 
 # test
-# <TBD>
+cd project && uv run pytest --cov=wind_agent
 
 # build
-# <TBD>
+cd project && uv build
 ```
 
 ## Directory map (update as the project grows)
@@ -80,6 +80,8 @@ Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
 .
 ├── AGENTS.md
 ├── README.md
+├── project/                # executable Python package and runtime configuration
+├── docs/                   # planning, research, and normative specification
 ├── .agents/skills/          # gh-fix-ci, gh-address-comments, git-commit-writer, pr-description-writer
 ├── .cursor/                 # Cursor MCP + impeccable skill
 └── .code-review-graph/      # local graph DB (gitignored)

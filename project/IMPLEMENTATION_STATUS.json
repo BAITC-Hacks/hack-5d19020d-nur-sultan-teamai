@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "updated_at_utc": "2026-09-23T00:00:00Z",
+  "tasks": {
+    "T00": {
+      "status": "blocked",
+      "reason": "Original XLSX/PDF inputs and resolvable coordinates are unavailable"
+    },
+    "T01": {
+      "status": "blocked",
+      "reason": "Package index was unreachable, so uv.lock and dependency-backed tests could not be completed",
+      "outputs": ["pyproject.toml", "src/wind_agent", "tests/unit"]
+    },
+    "T02": {
+      "status": "passed",
+      "scope": "Independent clock, interval, availability-policy, and strict fail-closed core"
+    },
+    "T03": {"status": "pending"}
+  },
+  "claims": {
+    "real_data_audited": false,
+    "strict_replay_ready": false,
+    "real_model_metrics_available": false
+  }
+}

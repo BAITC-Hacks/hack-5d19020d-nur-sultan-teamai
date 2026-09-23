@@ -1,0 +1,12 @@
+version: '2.0'
+strict:
+  requires_confirmed_time_contract: true
+provisional:
+  timezone_hypothesis: UTC
+  timestamp_semantics_hypothesis: interval_start
+  availability_delay_minutes: 60
+  status: configured_default_not_confirmed
+replay:
+  first_origin_utc: '2026-01-31T00:00:00Z'
+  last_origin_utc: '2026-02-28T00:00:00Z'
+  horizon_intervals: 48
